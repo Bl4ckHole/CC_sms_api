@@ -19,5 +19,5 @@ pseudo = read()
 
 local modem = peripheral.wrap("back")
 
-rednet.open(side)
+rednet.open("back")
 rednet.host("SMS",pseudo)
