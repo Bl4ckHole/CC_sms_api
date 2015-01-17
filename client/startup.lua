@@ -17,6 +17,11 @@ pseudo = read()
 --	error("The modem is not wireless")
 --end
 
+function sendSMS(target, message)
+	local ID = rednet.lookup("SMS", target)
+	rednet.send(ID, message, "SMS")
+end
+
 local modem = peripheral.wrap("back")
 
 rednet.open("back")
