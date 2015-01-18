@@ -25,7 +25,7 @@ function listener(mode)
 end
 
 function displaySMS(sender,message)
-	print("Vous avez un message de "..sender.." :\n")
+	print("You've got a message from "..sender.." :\n")
 	print(message)
 end
 
