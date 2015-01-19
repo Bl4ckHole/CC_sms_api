@@ -1,14 +1,18 @@
 tArgs={...}
 local pseudo = nil
+baseShellID = multishell.getFocus()
 print("Please enter your pseudo")
 pseudo = read()
 
-function sendSMS(target, message)
-	local ackMessage = nil
-	local ID = rednet.lookup("SMS", target)
-	rednet.send(ID, message, "SMS")
-	receiver, ackMessage = listener("ack")
-	if receiver == ID and ackMessage == "#!ACK!#" then 
+function sendSMS(recipient, message)
+	local ackMessage, receiver = nil
+	local recipientID = rednet.lookup("SMS", recipient)
+	rednet.send(recipientID, message, "SMS")
+	-- Waiting for ack
+	listenerTabID = multishell.launch({ackMessage, receiver}, listener("ack"))
+	multishell.setTitle(listenerTabID, "Listener tab")
+	multishell.setFocus(baseShellID) 
+	if receiver == recipientID and ackMessage == "#!ACK!#" then 
 		print("Message received by recipient")
 	else
 		print("Failed to send message.\nEither you or the recipient are too far from any relay")
@@ -33,5 +37,7 @@ local modem = peripheral.wrap("back")
 
 rednet.open("back")
 rednet.host("SMS",pseudo)
+
+
 
 
