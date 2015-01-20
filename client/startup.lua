@@ -9,7 +9,7 @@ function sendSMS(recipient, message)
 	local recipientID = rednet.lookup("SMS", recipient)
 	rednet.send(recipientID, message, "SMS")
 	-- Waiting for ack
-	listenerTabID = multishell.launch({ackMessage, receiver}, listener("ack"))
+	listenerTabID = multishell.launch({ackMessage, receiver}, "/listener", "ack")
 	multishell.setTitle(listenerTabID, "Listener tab")
 	multishell.setFocus(baseShellID) 
 	if receiver == recipientID and ackMessage == "#!ACK!#" then 
